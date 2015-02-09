@@ -1,5 +1,5 @@
 @import "aui/alloy-font-awesome/scss/variables";
-@import "compass";
+@import "bourbon";
 
 /* ---------- Dragging/sorting indicators ---------- */
 
@@ -16,7 +16,7 @@
 }
 
 .portlet-boundary.yui3-dd-dragging {
-	@include opacity(0.6);
+	opacity: 0.6;
 
 	.portlet {
 		border: 2px dashed #CCC;
@@ -24,7 +24,7 @@
 }
 
 .sortable-layout-proxy {
-	@include opacity(1);
+	opacity: 1;
 
 	.portlet-topper {
 		background-image: none;
@@ -34,7 +34,7 @@
 .proxy {
 	cursor: move;
 
-	@include opacity(0.65);
+	opacity: 0.65;
 
 	position: absolute;
 
@@ -79,6 +79,39 @@
 
 .yui3-dd-proxy {
 	z-index: 1110 !important;
+}
+
+/* ---------- List group ---------- */
+
+.nav.list-group {
+	li > a {
+		&:focus, &:hover {
+			background-color: #E5F5FC;
+			color: #009AE5;
+		}
+	}
+
+	> .active {
+		border-width: 1px 0 0 0;
+
+		> a {
+			&, &:focus, &:hover {
+				background-color: #60BFEF;
+				border: 1px solid #60BFEF;
+				color: #FFF;
+			}
+		}
+	}
+
+	.list-group-item {
+		padding: 0;
+
+		&.nav-header {
+			background-color: #F3F3F3;
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
 }
 
 /* ---------- Portal tool tips ---------- */
@@ -219,6 +252,10 @@
 
 /* ---------- Tabs ---------- */
 
+.lfr-nav.nav-tabs {
+	margin-bottom: 20px;
+}
+
 .tab-active strong {
 	font-weight: normal;
 }
@@ -230,6 +267,111 @@
 .tab-back-content {
 	border-width: 0;
 	padding: 1px;
+}
+
+/* ---------- Switches ---------- */
+
+input.switch {
+	float: left;
+	font-size: 62.5%;
+	margin-left: -999em;
+
+	&:empty ~ .switch-bar {
+		cursor: pointer;
+		display: block;
+		font-size: 1.2rem;
+		line-height: 2.6rem;
+		min-height: 2.6rem;
+		position: relative;
+
+		@include user-select(none);
+
+		text-indent: 5rem;
+
+		&:after, &:before {
+			background-color: #DDD;
+			bottom: 0;
+			content: ' ';
+			display: block;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 4.4rem;
+		}
+
+		&:after {
+			background-color: #FFF;
+			bottom: 0.4rem;
+			left: 0.4rem;
+			top: 0.4rem;
+			width: 1.8rem;
+		}
+
+		.switch-toggle:after {
+			content: attr(data-label-off);
+			text-transform: uppercase;
+		}
+
+		.switch-icon {
+			color: #FFF;
+			font-size: 1.4rem;
+			left: 0.4rem;
+			line-height: 1.8rem;
+			position: absolute;
+			text-align: center;
+			text-indent: 0;
+			top: 0.4rem;
+			width: 1.8rem;
+			z-index: 1;
+		}
+
+		.button-icon {
+			color: #DDD;
+		}
+
+		.button-icon-on, .switch-icon-on {
+			opacity: 0;
+		}
+
+		.switch-icon-on {
+			left: 0.2rem;
+		}
+
+		.switch-icon-off {
+			left: 2.4rem;
+		}
+	}
+
+	&:checked ~ .switch-bar {
+		&:after {
+			left: 2.2rem;
+		}
+
+		&:before {
+			background-color: #1E9C38;
+		}
+
+		.switch-toggle:after {
+			content: attr(data-label-on);
+		}
+
+		.button-icon {
+			left: 2.2rem;
+		}
+
+		.button-icon-on, .switch-icon-on {
+			opacity: 1;
+		}
+
+		.button-icon-off, .switch-icon-off {
+			opacity: 0;
+		}
+	}
+
+	&:disabled ~ .switch-bar {
+		cursor: auto;
+		opacity: 0.4;
+	}
 }
 
 /* ---------- Miscellaneous ---------- */
@@ -285,6 +427,7 @@
 	font-weight: bold;
 
 	.category-portlets & {
+		background-color: #00A2EA;
 		color: #FFF;
 	}
 }
@@ -305,6 +448,13 @@
 	margin-right: 5px;
 	text-decoration: none;
 	vertical-align: middle;
+}
+
+.lfr-url-error {
+	display: inline-block;
+	white-space: normal;
+
+	@include word-wrap(break-all);
 }
 
 /* ---------- Menus ---------- */
@@ -396,6 +546,45 @@
 	text-shadow: -1px -1px #2C2F34;
 }
 
+/* ---------- Modals ---------- */
+
+.dialog-iframe-popup {
+	> #main-content, > #wrapper {
+		bottom: 0;
+		left: 0;
+		overflow: auto;
+		padding: 20px;
+		position: absolute;
+		right: 0;
+		top: 0;
+
+		@include prefixer(overflow-scrolling, touch, 'webkit');
+	}
+}
+
+.modal {
+	display: block;
+	margin: 0;
+	overflow: hidden;
+	position: fixed;
+}
+
+.modal-body {
+	overflow: auto;
+
+	&.dialog-iframe-bd {
+		overflow: hidden;
+	}
+}
+
+.modal-hidden {
+	display: none;
+}
+
+.modal-open .modal {
+	overflow: hidden;
+}
+
 /* ---------- Loading mask ---------- */
 
 .loadingmask-content {
@@ -464,6 +653,23 @@
 	background-color: transparent;
 }
 
+/* ---------- Input mirror ---------- */
+
+.lfr-autocomplete-input-list .yui3-aclist-list {
+	margin: 0;
+}
+
+.liferay-autocomplete-input-mirror {
+	left: -9999px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: absolute;
+	top: -9999px;
+	visibility: hidden;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+}
+
 /* ---------- Page customization ---------- */
 
 .dragging .portlet-column.customizable {
@@ -489,7 +695,7 @@
 	font-size: 1.5em;
 	margin: 1em;
 
-	@include opacity(0.9);
+	opacity: 0.9;
 
 	padding: 1em;
 	position: absolute;
@@ -553,13 +759,174 @@
 
 /* ---------- CKEditor menu ---------- */
 
-.aui {
-	.cke_dialog .cke_dialog_ui_input_text {
-		height: auto;
+.cke_dialog .cke_dialog_ui_input_text {
+	height: auto;
+}
+
+.cke_editable_inline a {
+	cursor: pointer;
+}
+
+.cke_panel.cke_combopanel {
+	width: 220px;
+}
+
+.cke_panel_block {
+	.cke_panel_grouptitle {
+		font-size: 20px;
+		line-height: 20px;
+		margin-top: 0;
 	}
 
-	.cke_editable_inline a {
-		cursor: pointer;
+	.cke_panel_list {
+		margin-left: 0;
+
+		.cke_panel_listItem {
+			line-height: initial;
+
+			a:hover {
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+/* ---------- CKEditor table ---------- */
+
+.cke_show_border {
+	width: 500px;
+
+	td {
+		height: 15px;
+	}
+}
+
+/* ---------- HTML editor ---------- */
+
+.html-editor.portlet {
+	background: #FFF;
+	color: #000;
+	line-height: 1;
+	padding: 1em;
+}
+
+.html-editor.portlet-message-boards {
+	@include hyphens;
+
+	word-wrap: break-word;
+
+	blockquote {
+		background: #EEF0F2 url(../images/message_boards/quoteleft.png) no-repeat 5px 5px;
+		border: 1px solid #777;
+		padding: 5px 45px;
+
+		&:after {
+			background: url(../images/message_boards/quoteright.png) no-repeat 50%;
+			content: '';
+			display: block;
+			float: right;
+			height: 24px;
+			margin-right: -35px;
+			margin-top: -25px;
+			width: 31px;
+			z-index: 999;
+		}
+
+		cite {
+			display: block;
+			font-weight: bold;
+		}
+	}
+
+	pre {
+		background: #F9F9F9;
+		border: 1px solid #777;
+		padding: 0.5em;
+	}
+}
+
+/* ---------- Liferay source editor ---------- */
+
+.lfr-source-editor {
+	border: solid 0 transparent;
+	border-bottom-width: 2px;
+	padding-right: 30px;
+	position: relative;
+
+	.lfr-source-editor-toolbar {
+		padding: 0;
+		position: absolute;
+		right: 0;
+		text-align: center;
+		top: 0;
+		width: 30px;
+
+		li {
+			list-style-type: none;
+
+			.btn {
+				padding: 0 5px;
+			}
+		}
+	}
+}
+
+/* ---------- Alloy editor ---------- */
+
+.alloy-editor {
+	&.alloy-editor-placeholder {
+		color: #2B4256;
+		padding-left: 10px;
+
+		&:empty:not(:focus) {
+			background: transparent;
+			border-left: 2px solid #DBDDE1;
+			color: #B0B4BB;
+		}
+
+		&.readonly {
+			color: #CCC;
+		}
+	}
+
+	outline: 0;
+
+	a {
+		cursor: auto;
+	}
+}
+
+.alloy-editor-switch {
+	border: dashed 0 #DDD;
+	border-bottom-width: 1px;
+	position: relative;
+
+	&.show-source {
+		border-bottom-width: 2px;
+		border-style: solid;
+	}
+
+	.btn {
+		bottom: 0;
+		padding: 0 5px;
+		position: absolute;
+		right: 0;
+	}
+}
+
+.alloy-editor-wrapper {
+	.lfr-source-editor {
+		display: none;
+	}
+
+	&.show-source {
+		.alloy-editor-placeholder {
+			display: none;
+		}
+
+		.lfr-source-editor {
+			display: block;
+		}
 	}
 }
 
@@ -615,24 +982,27 @@
 	.lfr-portlet-title-editable-content {
 		padding: 0;
 
-		.combobox-content {
-			.field-content .field-input-text {
-				display: block;
-				margin-bottom: 0;
-			}
+		.field-input {
+			margin-bottom: 0;
+		}
 
-			.field-label.textfield-label {
-				display: none;
-			}
+		.textfield-label {
+			display: none;
+		}
 
-			.toolbar-content {
-				margin-top: 0;
-				vertical-align: top;
+		.btn-toolbar-content {
+			display: inline-block;
+		}
 
-				.btn-group {
-					margin-top: 0;
-				}
-			}
+		.btn-group {
+			margin-top: 0;
+		}
+
+		.btn {
+			display: inline-block;
+			float: none;
+			margin-top: 0;
+			width: auto;
 		}
 	}
 }
@@ -686,18 +1056,8 @@
 	}
 }
 
-.ie8 {
-	.row-fluid {
-		input[class*=span].search-query {
-			line-height: 20px;
-			min-height: 20px;
-		}
-	}
-}
+/* LPS-44925 */
 
-.ios.mobile {
-	.modal-content .dialog-iframe-bd {
-		overflow: auto;
-		-webkit-overflow-scrolling: touch;
-	}
+.modal-content .dialog-iframe-node {
+	border: 1px solid transparent;
 }
